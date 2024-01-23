@@ -15,6 +15,7 @@ import com.jn.chatsphere.domain.model.loadingMessage
 import com.jn.chatsphere.domain.repository.GenerativeModelRepository
 import com.jn.chatsphere.utils.extensions.hasPendingMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -50,6 +51,7 @@ class ChatViewModel @Inject constructor(
                 add(loadingMessage)
             }
             updateMessages(messages, Message())
+            chatRepository.upsert(_state.value.chat.toChatEntity())
 
             val modelMessage = modelRepository.generateContent(
                 message = message, chatHistory = previousMessages.toContent()
@@ -101,7 +103,7 @@ class ChatViewModel @Inject constructor(
         viewModelScope.launch {
             if (!_state.value.chat.messages.hasPendingMessage()) {
                 chatRepository.upsert(chatEntity)
-
+                delay(500)
                 setCurrentChat(_state.value.chatList.first())
             }
         }

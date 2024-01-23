@@ -13,7 +13,7 @@ data class ChatEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @TypeConverters(ChatSettingConverter::class)
-    val chatSetting: ChatSetting = ChatSetting(title = "$id ChatSphere"),
+    val chatSetting: ChatSetting = ChatSetting(),
     @TypeConverters(MessagesConverter::class)
     val messages: List<Message> = emptyList()
 )
