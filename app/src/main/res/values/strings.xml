@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ChatSphere</string>
+    <string name="message_not_sent">Message not sent</string>
+</resources>
